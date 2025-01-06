@@ -78,6 +78,7 @@ const BeansGrid = () => {
                 <AttributesWrapper className="attributes-wrapper">
                   {Object.values(IconMapping).map((icon) => (
                     <IconRenderer
+                      key={icon.type}
                       type={icon.type}
                       isActive={bean[icon.type]}
                       tooltip={icon.tooltip}

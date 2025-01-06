@@ -1,5 +1,6 @@
 import React from "react";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -34,11 +35,27 @@ const Nav = () => {
           sx={{
             fontWeight: "bold",
             color: "#FFFFFF",
-            fontFamily: "'Comic Sans MS', cursive",
+            flexGrow: 1,
           }}
         >
           Timi's Jelly Beans
         </Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Button
+            component={Link}
+            to="/"
+            sx={{ color: "#FFFFFF", textTransform: "none", marginRight: "16px" }}
+          >
+            Home
+          </Button>
+          <Button
+            component={Link}
+            to="/chart"
+            sx={{ color: "#FFFFFF", textTransform: "none", marginRight: "16px" }}
+          >
+            Statistics
+          </Button>
+        </Box>
       </Toolbar>
     </AppBar>
   );
