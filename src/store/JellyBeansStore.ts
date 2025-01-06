@@ -56,7 +56,7 @@ export class JellyBeansStore {
     let beans = this.beans;
     if (this.filter) {
       beans = beans.filter((bean) =>
-        bean.FlavorName.toLowerCase().startsWith(this.filter.toLowerCase())
+        bean.FlavorName.toLowerCase().includes(this.filter.toLowerCase())
       );
     }
 
