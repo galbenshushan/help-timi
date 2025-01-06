@@ -6,6 +6,7 @@ import { jellyBeansStore } from "../../store";
 import { Bean } from "../../types/JellyBeans";
 import IconRenderer from "../UI/IconRenderer";
 import { IconMapping } from "../../consts/general";
+import ColorContainer from "../ColorContainer";
 
 const BeanCard = styled(Box)`
   border: 1px solid #ddd;
@@ -74,6 +75,7 @@ const BeansGrid = () => {
                 <Typography variant="h6" fontWeight={"bold"}>
                   {bean.FlavorName}
                 </Typography>
+                <ColorContainer color={bean.ColorGroup} />
                 <Description variant="body2">{bean.Description}</Description>
                 <AttributesWrapper className="attributes-wrapper">
                   {Object.values(IconMapping).map((icon) => (

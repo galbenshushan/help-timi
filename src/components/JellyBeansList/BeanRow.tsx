@@ -4,6 +4,7 @@ import { TableCell, TableRow, Tooltip } from "@mui/material";
 import IconRenderer from "../UI/IconRenderer";
 import { IconMapping } from "../../consts/general";
 import styled from "styled-components";
+import ColorContainer from "../ColorContainer";
 
 interface BeanRowProps {
   bean: Bean;
@@ -41,11 +42,9 @@ const BeanRow: React.FC<BeanRowProps> = ({ bean }) => {
           <EllipsisText>{bean.Description}</EllipsisText>
         </Tooltip>
       </TableCell>
+      <TableCell>{bean.GroupNameSerialized || "N/A"}</TableCell>
       <TableCell>
-        {bean.GroupNameSerialized || 'N/A'}
-      </TableCell>
-      <TableCell>
-        {bean.ColorGroup || 'N/A'}
+      <ColorContainer color={bean.ColorGroup} />
       </TableCell>
     </TableRow>
   );
