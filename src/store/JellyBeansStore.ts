@@ -60,28 +60,6 @@ export class JellyBeansStore {
       );
     }
 
-    // if (this.sortOrder === "asc") {
-    //   beans = beans
-    //     .slice()
-    //     .sort((a, b) => a.FlavorName.localeCompare(b.FlavorName));
-    // } else if (this.sortOrder === "desc") {
-    //   beans = beans
-    //     .slice()
-    //     .sort((a, b) => b.FlavorName.localeCompare(a.FlavorName));
-    // } else if (this.sortOrder === "group") {
-    //   beans = beans
-    //     .slice()
-    //     .sort((a, b) =>
-    //       a.GroupNameSerialized.localeCompare(b.GroupNameSerialized)
-    //     );
-    // } else if (this.sortOrder === "color") {
-    //   beans = beans
-    //     .slice()
-    //     .sort((a, b) =>
-    //       a.ColorGroup.localeCompare(b.ColorGroup)
-    //     );
-    // }
-
     switch (this.sortOrder) {
       case "asc":
         beans = beans
@@ -103,12 +81,10 @@ export class JellyBeansStore {
       case "color":
         beans = beans
           .slice()
-          .sort((a, b) =>
-            a.ColorGroup.localeCompare(b.ColorGroup)
-          );
+          .sort((a, b) => a.ColorGroup.localeCompare(b.ColorGroup));
         break;
     }
-    
+
     return beans;
   }
 
