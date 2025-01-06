@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
@@ -16,14 +17,25 @@ const ColorCell = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
+  width: fit-content;
 `;
 
-const ColorContainer = ({ color = "#FFFFFF" }) => {
+interface ColorContainerProps {
+  color?: string;
+  showTitle?: boolean;
+}
+
+const ColorContainer: React.FC<ColorContainerProps> = ({
+  color = "#FFFFFF",
+  showTitle = false,
+}) => {
   return (
-    <ColorCell>
-      <ColorBox color={color} />
-      {color}
-    </ColorCell>
+    <Tooltip title={color}>
+      <ColorCell>
+        {showTitle && "color:"}
+        <ColorBox color={color} />
+      </ColorCell>
+    </Tooltip>
   );
 };
 
