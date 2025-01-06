@@ -4,3 +4,4 @@ export enum Endpoints {
   COMBINATIONS = "combinations",
   HEALTH = "health",
 }
+

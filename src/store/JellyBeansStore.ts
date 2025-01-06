@@ -1,70 +1,158 @@
-import { observable, action } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
 import {
   fetchBeans,
   fetchColors,
   fetchCombinations,
   checkHealth,
 } from "../service/JellyBeansService";
-import { Bean, Color } from "../types/beans";
-import { appStore } from ".";
+import { Bean, BeansRes } from "../types/JellyBeans";
+import { ViewType } from "../enums/beans";
 
 export class JellyBeansStore {
   @observable beans: Bean[] = [];
-  @observable colors: Color[] = [];
+  @observable totalBeans: number = 0;
+  @observable colors: any[] = [];
   @observable combinations: any[] = [];
   @observable healthStatus: any | null = null;
+  @observable currentPage: number = 1;
+  @observable viewType: ViewType = ViewType.TABLE;
+  @observable sortOrder: string = "asc";
+  @observable filter: string = "";
+  @observable page: number = 0;
+  rowsPerPage: number = 6;
+  limits = [
+    { from: 0, to: 50 },
+    { from: 50, to: 100 },
+    { from: 100, to: this.totalBeans },
+  ];
 
-  @action async fetchBeans() {
-    appStore.setLoading(true);
-    try {
-      const data = await fetchBeans();
-      this.beans = data;
-      appStore.setError(null);
-    } catch (e: any) {
-      appStore.setError(`Failed to fetch beans: ${e.message}`);
-    } finally {
-      appStore.setLoading(false);
-    }
+  constructor() {
+    makeAutoObservable(this);
+    this.fetchBeans();
   }
 
-  @action async fetchColors() {
-    appStore.setLoading(true);
+  setPage(page: number) {
+    this.page = page;
+  }
+
+  get totalPages() {
+    return Math.ceil(this.totalBeans / this.rowsPerPage);
+  }
+
+  public setViewType = (viewType: ViewType) => {
+    this.viewType = viewType;
+  };
+
+  public toggleViewType = () => {
+    this.viewType =
+      this.viewType === ViewType.TABLE ? ViewType.GRID : ViewType.TABLE;
+  };
+
+  setFilter(filter: string) {
+    this.filter = filter;
+  }
+
+  @observable get filteredAndSortedBeans(): Bean[] {
+    let beans = this.beans;
+    if (this.filter) {
+      beans = beans.filter((bean) =>
+        bean.FlavorName.toLowerCase().startsWith(this.filter.toLowerCase())
+      );
+    }
+
+    // if (this.sortOrder === "asc") {
+    //   beans = beans
+    //     .slice()
+    //     .sort((a, b) => a.FlavorName.localeCompare(b.FlavorName));
+    // } else if (this.sortOrder === "desc") {
+    //   beans = beans
+    //     .slice()
+    //     .sort((a, b) => b.FlavorName.localeCompare(a.FlavorName));
+    // } else if (this.sortOrder === "group") {
+    //   beans = beans
+    //     .slice()
+    //     .sort((a, b) =>
+    //       a.GroupNameSerialized.localeCompare(b.GroupNameSerialized)
+    //     );
+    // } else if (this.sortOrder === "color") {
+    //   beans = beans
+    //     .slice()
+    //     .sort((a, b) =>
+    //       a.ColorGroup.localeCompare(b.ColorGroup)
+    //     );
+    // }
+
+    switch (this.sortOrder) {
+      case "asc":
+        beans = beans
+          .slice()
+          .sort((a, b) => a.FlavorName.localeCompare(b.FlavorName));
+        break;
+      case "desc":
+        beans = beans
+          .slice()
+          .sort((a, b) => b.FlavorName.localeCompare(a.FlavorName));
+        break;
+      case "group":
+        beans = beans
+          .slice()
+          .sort((a, b) =>
+            a.GroupNameSerialized.localeCompare(b.GroupNameSerialized)
+          );
+        break;
+      case "color":
+        beans = beans
+          .slice()
+          .sort((a, b) =>
+            a.ColorGroup.localeCompare(b.ColorGroup)
+          );
+        break;
+    }
+    
+    return beans;
+  }
+
+  setSortOrder(sortOrder: string) {
+    this.sortOrder = sortOrder;
+  }
+
+  public async fetchBeans() {
+    try {
+      this.limits.forEach(async (limit) => {
+        const data: BeansRes = await fetchBeans(limit.from, limit.to);
+        this.beans.push(...data.data);
+        this.totalBeans = data.total;
+      });
+    } catch (e: any) {}
+  }
+
+  get paginatedBeans() {
+    const start = this.page * this.rowsPerPage;
+    const end = start + this.rowsPerPage;
+    return this.filteredAndSortedBeans.slice(start, end);
+  }
+
+  get isTable() {
+    return this.viewType === ViewType.TABLE;
+  }
+  public async fetchColors() {
     try {
       const data = await fetchColors();
       this.colors = data;
-      appStore.setError(null);
-    } catch (e: any) {
-      appStore.setError(`Failed to fetch colors: ${e.message}`);
-    } finally {
-      appStore.setLoading(false);
-    }
+    } catch (e: any) {}
   }
 
-  @action async fetchCombinations() {
-    appStore.setLoading(true);
+  public async fetchCombinations() {
     try {
       const data = await fetchCombinations();
       this.combinations = data;
-      appStore.setError(null);
-    } catch (e: any) {
-      appStore.setError(`Failed to fetch combinations: ${e.message}`);
-    } finally {
-      appStore.setLoading(false);
-    }
+    } catch (e: any) {}
   }
 
-  @action async checkHealth() {
-    appStore.setLoading(true);
+  public async checkHealth() {
     try {
       const data = await checkHealth();
       this.healthStatus = data;
-      appStore.setError(null);
-    } catch (e: any) {
-      appStore.setError(`Failed to check health: ${e.message}`);
-    } finally {
-      appStore.setLoading(false);
-    }
+    } catch (e: any) {}
   }
 }
-
-export const jellyBeansStore = new JellyBeansStore();

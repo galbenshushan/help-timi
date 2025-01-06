@@ -1,3 +1,7 @@
+* {
+  font-family: "Comic Sans MS", cursive !important;
+}
+
 button {
-    text-transform: none !important;
-  }
+  text-transform: none !important;
+}
