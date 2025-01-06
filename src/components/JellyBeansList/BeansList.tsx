@@ -10,6 +10,13 @@ import {
 } from "@mui/material";
 import BeanRow from "./BeanRow";
 import { observer } from "mobx-react-lite";
+import styled from "styled-components";
+
+const StyledTableCell = styled(TableCell)`
+  font-weight: 600;
+  font-size: 16px;
+  text-align: start;
+`;
 
 const BeansList: React.FC = observer(() => {
   return (
@@ -17,21 +24,10 @@ const BeansList: React.FC = observer(() => {
       <TableHead>
         <TableRow>
           <TableCell></TableCell>
-          <TableCell
-            style={{ fontWeight: "600", fontSize: "16px", textAlign: "start" }}
-          >
-            Flavor Name
-          </TableCell>
-          <TableCell
-            style={{ fontWeight: "600", fontSize: "16px", textAlign: "start" }}
-          >
-            Description
-          </TableCell>
-          <TableCell
-            style={{ fontWeight: "600", fontSize: "16px", textAlign: "start" }}
-          >
-            Group Name
-          </TableCell>
+          <StyledTableCell>Flavor Name</StyledTableCell>
+          <StyledTableCell>Description</StyledTableCell>
+          <StyledTableCell>Group Name</StyledTableCell>
+          <StyledTableCell>Color</StyledTableCell>
         </TableRow>
       </TableHead>
       <TableBody>

@@ -36,7 +36,8 @@ export class JellyBeansStore {
   }
 
   get totalPages() {
-    return Math.ceil(this.totalBeans / this.rowsPerPage);
+    const rows = this.rowsPerPage + 1;
+    return Math.ceil(this.totalBeans / rows);
   }
 
   public setViewType = (viewType: ViewType) => {

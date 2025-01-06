@@ -44,6 +44,9 @@ const BeanRow: React.FC<BeanRowProps> = ({ bean }) => {
       <TableCell>
         {bean.GroupNameSerialized || 'N/A'}
       </TableCell>
+      <TableCell>
+        {bean.ColorGroup || 'N/A'}
+      </TableCell>
     </TableRow>
   );
 };
