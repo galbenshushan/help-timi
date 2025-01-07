@@ -11,6 +11,7 @@ import { styled } from "@mui/system";
 import { Link, useLocation, LinkProps } from "react-router-dom";
 import { navItems } from "../../../consts/general";
 import { NavItem } from "../../../types/general";
+import NavLogo from "./NavLogo";
 
 const StyledAppBar = styled(AppBar)({
   backgroundColor: "transparent",
@@ -67,17 +68,7 @@ const Nav = () => {
     <StyledAppBar position="static">
       <StyledBox>
         <StyledToolbar>
-          <Box
-            component="img"
-            src="/assets/timi.webp"
-            alt="Timi"
-            sx={{
-              height: 80,
-              width: 80,
-              borderRadius: "50%",
-              marginRight: "16px",
-            }}
-          />
+          <NavLogo />
           <StyledTypography variant="h4">Timi's Jelly Beans</StyledTypography>
           <Box
             sx={{
