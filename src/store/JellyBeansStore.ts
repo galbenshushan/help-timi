@@ -1,12 +1,13 @@
 import { makeAutoObservable, observable } from "mobx";
 import {
   fetchBeans,
-  fetchColors,
+  fetchColor,
   fetchCombinations,
   checkHealth,
 } from "../service/JellyBeansService";
 import { Bean, BeansRes } from "../types/JellyBeans";
 import { ViewType } from "../enums/beans";
+import { isOrangeShade } from "../utils/Colors";
 
 export class JellyBeansStore {
   @observable beans: Bean[] = [];
@@ -20,15 +21,11 @@ export class JellyBeansStore {
   @observable filter: string = "";
   @observable page: number = 0;
   rowsPerPage: number = 6;
-  limits = [
-    { from: 0, to: 50 },
-    { from: 50, to: 100 },
-    { from: 100, to: this.totalBeans },
-  ];
 
   constructor() {
     makeAutoObservable(this);
     this.fetchBeans();
+    this.fetchCombinations();
   }
 
   setPage(page: number) {
@@ -95,14 +92,26 @@ export class JellyBeansStore {
 
   public async fetchBeans() {
     try {
-      this.limits.forEach(async (limit) => {
+      const initialData: BeansRes = await fetchBeans(0, 50);
+      this.beans.push(...initialData.data);
+      this.totalBeans = initialData.total;
+
+      const limits = [
+        { from: 50, to: 100 },
+        { from: 100, to: this.totalBeans },
+      ];
+      for (const limit of limits) {
         const data: BeansRes = await fetchBeans(limit.from, limit.to);
         this.beans.push(...data.data);
-        this.totalBeans = data.total;
-      });
-    } catch (e: any) {}
+      }
+    } catch (e: any) {
+      console.error(e);
+    }
   }
 
+  get orangeBeans() {
+    return this.beans.filter((bean) => bean.ColorGroup);
+  }
   get paginatedBeans() {
     const start = this.page * this.rowsPerPage;
     const end = start + this.rowsPerPage;
@@ -112,17 +121,42 @@ export class JellyBeansStore {
   get isTable() {
     return this.viewType === ViewType.TABLE;
   }
-  public async fetchColors() {
+
+  public getOrangeCombinations() {
+    const allBeansCombinations: any = [];
+    this.combinations.forEach((combination) => {
+      const tags = combination.TagSerialized.split(", + ,");
+      const conbinationBeans: Bean[] = [];
+      this.beans.map(async (bean: Bean) => {
+        if (tags.includes(bean.FlavorName)) {
+          conbinationBeans.push(bean);
+        }
+      });
+
+      const allOrange =
+        conbinationBeans.length > 0 &&
+        conbinationBeans.every((bean: Bean) => bean.BackgroundColor && isOrangeShade(bean.BackgroundColor));
+      if (allOrange) {
+        allBeansCombinations.push({
+          beans: conbinationBeans,
+          combination: combination,
+        });
+      }
+    });
+    return allBeansCombinations;
+  }
+
+  public async fetchColor(colorId: string) {
     try {
-      const data = await fetchColors();
-      this.colors = data;
+      const data: BeansRes = await fetchColor(colorId);
+      return data.data[0];
     } catch (e: any) {}
   }
 
   public async fetchCombinations() {
     try {
-      const data = await fetchCombinations();
-      this.combinations = data;
+      const data: BeansRes = await fetchCombinations();
+      this.combinations = data.data;
     } catch (e: any) {}
   }
 

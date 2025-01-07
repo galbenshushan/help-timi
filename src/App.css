@@ -1,3 +1,27 @@
 * {
   font-family: "Comic Sans MS", cursive !important;
 }
+
+body {
+  background-color: #ed872d;
+}
+
+
+/* text, */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ p, 
+ a, 
+ /* li,  */
+ /* ul,  */
+ /* ol,  */
+ /* span,  */
+ /* div,  */
+button,
+input,td,th {
+  color: white !important;
+}

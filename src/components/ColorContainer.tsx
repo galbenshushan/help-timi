@@ -1,6 +1,7 @@
 import { Tooltip } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { jellyBeansStore } from "../store";
 
 const ColorBox = styled.div<{ color: string }>`
   width: 30px;
@@ -29,8 +30,19 @@ const ColorContainer: React.FC<ColorContainerProps> = ({
   color = "#FFFFFF",
   showTitle = false,
 }) => {
+  const [colorDescription, setColorDescription] = useState<string>(color);
+
+  const getColor = async () => {
+    const displayColor = await jellyBeansStore.fetchColor(color);
+    setColorDescription(displayColor.colorDescription);
+  };
+
+  useEffect(() => {
+    getColor();
+  }, []);
+
   return (
-    <Tooltip title={color}>
+    <Tooltip title={colorDescription}>
       <ColorCell>
         {showTitle && "color:"}
         <ColorBox color={color} />

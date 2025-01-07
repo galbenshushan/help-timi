@@ -37,16 +37,18 @@ export const fetchBeans = async (
   }
 };
 
-export const fetchColors = async (): Promise<any[]> => {
+export const fetchColor = async (colorId: string): Promise<BeansRes> => {
   try {
-    const response = await fetch(`${BASE_URL}/${Endpoints.COLORS}`);
+    const response = await fetch(
+      `${BASE_URL}/${Endpoints.COLORS}?colorId=${colorId}`
+    );
     return await handleApiResult(response);
   } catch (error: any) {
     throw new Error(`Failed to fetch colors: ${error.message}`);
   }
 };
 
-export const fetchCombinations = async (): Promise<any[]> => {
+export const fetchCombinations = async (): Promise<BeansRes> => {
   try {
     const response = await fetch(`${BASE_URL}/${Endpoints.COMBINATIONS}`);
     return await handleApiResult(response);

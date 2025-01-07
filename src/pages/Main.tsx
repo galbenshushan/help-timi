@@ -17,17 +17,30 @@ const Main: React.FC = observer(() => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Jelly Beans {jellyBeansStore.isTable  ? ViewType.TABLE : ViewType.GRID}</h1>
+      <h1>
+        Jelly Beans {jellyBeansStore.isTable ? ViewType.TABLE : ViewType.GRID}
+      </h1>
       <Toolbar />
       <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-        {jellyBeansStore.isTable  ? <BeansList /> : <BeansGrid />}
+        {jellyBeansStore.isTable ? <BeansList /> : <BeansGrid />}
       </div>
       <Pagination
         count={jellyBeansStore.totalPages}
         page={jellyBeansStore.page + 1}
         onChange={handleChangePage}
         color="primary"
-        style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
+        sx={{
+          marginTop: "20px",
+          display: "flex",
+          justifyContent: "center",
+          "& .MuiPaginationItem-root": {
+            color: "#d4731c",
+          },
+          "& .MuiPaginationItem-root.Mui-selected": {
+            backgroundColor: "#d4731c",
+            color: "white",
+          },
+        }}
       />
     </div>
   );
