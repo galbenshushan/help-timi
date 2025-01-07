@@ -2,10 +2,17 @@
 This app helps Timi find his favorite jelly bean combinations. Since Timi can only eat orange jelly beans, the app allows users to explore various jelly bean combinations, view jelly bean statistics, and provide recommendations based on Timi’s preferences.
 
 ## Features
-Jelly Bean Combinations: Explore different combinations of orange jelly beans.
-Jelly Bean Statistics: View statistical data on various bean attributes such as color, flavor, and groupings.
-Jelly Bean List and Cards View: Browse a visual list of jelly beans, each displayed with its details, flavor, and image.
-Help Timi Find His Favorite Combinations: Users can select from various jelly bean combinations and receive recommendations on which beans Timi can eat based on the combinations.
+Jelly Bean Combinations: 
+Explore different combinations of orange jelly beans.
+
+Jelly Bean Statistics: 
+View statistical data on various bean attributes such as color, flavor, and groupings.
+
+Jelly Bean List and Cards View: 
+Browse a visual list of jelly beans, each displayed with its details, flavor, and image.
+
+Help Timi Find His Favorite Combinations: 
+Users can select from various jelly bean combinations and receive recommendations on which beans Timi can eat based on the combinations.
 
 ## Installation
 Before starting the app, you need to install the necessary dependencies.
