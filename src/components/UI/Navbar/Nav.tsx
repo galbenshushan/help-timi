@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { Link, useLocation, LinkProps } from "react-router-dom";
+import { navItems } from "../../../consts/general";
+import { NavItem } from "../../../types/general";
 
 const StyledAppBar = styled(AppBar)({
   backgroundColor: "transparent",
@@ -85,27 +87,16 @@ const Nav = () => {
               justifyContent: "space-around",
             }}
           >
-            <StyledButton
-              component={Link}
-              to="/"
-              active={location.pathname === "/"}
-            >
-              Home
-            </StyledButton>
-            <StyledButton
-              component={Link}
-              to="/chart"
-              active={location.pathname === "/chart"}
-            >
-              Statistics
-            </StyledButton>
-            <StyledButton
-              component={Link}
-              to="/timi"
-              active={location.pathname === "/timi"}
-            >
-              Help Timi
-            </StyledButton>
+            {navItems.map((item: NavItem) => (
+              <StyledButton
+                key={item.to}
+                component={Link}
+                to={item.to}
+                active={location.pathname === item.to}
+              >
+                {item.label}
+              </StyledButton>
+            ))}
           </Box>
         </StyledToolbar>
       </StyledBox>
