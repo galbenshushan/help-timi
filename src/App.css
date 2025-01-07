@@ -21,7 +21,25 @@ th {
   color: white !important;
 }
 
-th{
+th {
   font-size: 24px !important;
   font-weight: 800 !important;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #dc4912;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #f45318;
 }
