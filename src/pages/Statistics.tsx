@@ -1,18 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import { jellyBeansStore } from "../store";
-import { Bean } from "../types/JellyBeans";
-import { BeanAttribute } from "../enums/beans";
-import { observer } from "mobx-react-lite";
+import useStatistics from "../hooks/useStatistics";
 import Legend from "../components/Chart/Legend";
 import YAxe from "../components/Chart/YAxe";
 import ChartBar from "../components/Chart/ChartBar";
+import { observer } from "mobx-react-lite";
 
 const ChartContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
 `;
 
 const ChartWrapper = styled.div`
@@ -20,8 +26,8 @@ const ChartWrapper = styled.div`
   position: relative;
   align-items: flex-end;
   justify-content: space-around;
-  width: 600px;
-  height: 300px;
+  width: 800px;
+  height: 500px;
   border-left: 2px solid black;
   border-bottom: 2px solid black;
 `;
@@ -34,29 +40,16 @@ const Chart = styled.div`
   height: 100%;
 `;
 
-
 const LegendContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
-  width: 600px;
+  width: 100%;
 `;
 
 const Statistics: React.FC = observer(() => {
-  const jellyBeans = jellyBeansStore.beans;
-  
-  const attributes = Object.values(BeanAttribute);
-  const attributeCounts = attributes.map((attr) =>
-    jellyBeans.reduce(
-      (count, bean: Bean) => (bean[attr] ? count + 1 : count),
-      0
-    )
-  );
-
-  const colors = ["wheat", "coral", "pink", "crimson"];
-  const maxCount = Math.max(...attributeCounts);
-  const maxHeight = 250;
-  const scaleFactor = maxCount > 0 ? maxHeight / maxCount : 1;
+  const { attributes, attributeCounts, colors, maxCount, scaleFactor } =
+    useStatistics();
 
   return (
     <div style={{ padding: "20px" }}>

@@ -7,7 +7,7 @@ const ColorBox = styled.div<{ color: string }>`
   width: 30px;
   height: 30px;
   background-color: ${({ color }) => color};
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 50%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background: linear-gradient(45deg, ${({ color }) => color}, #f0f0f0);
@@ -19,6 +19,7 @@ const ColorCell = styled.div`
   justify-content: flex-start;
   gap: 8px;
   width: fit-content;
+  color: white;
 `;
 
 interface ColorContainerProps {
@@ -44,7 +45,7 @@ const ColorContainer: React.FC<ColorContainerProps> = ({
   return (
     <Tooltip title={colorDescription}>
       <ColorCell>
-        {showTitle && "color:"}
+        {showTitle && "Color:"}
         <ColorBox color={color} />
       </ColorCell>
     </Tooltip>

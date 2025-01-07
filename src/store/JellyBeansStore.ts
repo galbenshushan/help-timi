@@ -3,10 +3,9 @@ import {
   fetchBeans,
   fetchColor,
   fetchCombinations,
-  checkHealth,
 } from "../service/JellyBeansService";
 import { Bean, BeansRes } from "../types/JellyBeans";
-import { ViewType } from "../enums/beans";
+import { SortType, ViewType } from "../enums/beans";
 import { isOrangeShade } from "../utils/Colors";
 
 export class JellyBeansStore {
@@ -59,24 +58,24 @@ export class JellyBeansStore {
     }
 
     switch (this.sortOrder) {
-      case "asc":
+      case SortType.ASC:
         beans = beans
           .slice()
           .sort((a, b) => a.FlavorName.localeCompare(b.FlavorName));
         break;
-      case "desc":
+      case SortType.DESC:
         beans = beans
           .slice()
           .sort((a, b) => b.FlavorName.localeCompare(a.FlavorName));
         break;
-      case "group":
+      case SortType.GROUP:
         beans = beans
           .slice()
           .sort((a, b) =>
             a.GroupNameSerialized.localeCompare(b.GroupNameSerialized)
           );
         break;
-      case "color":
+      case SortType.COLOR:
         beans = beans
           .slice()
           .sort((a, b) => a.ColorGroup.localeCompare(b.ColorGroup));
@@ -109,9 +108,6 @@ export class JellyBeansStore {
     }
   }
 
-  get orangeBeans() {
-    return this.beans.filter((bean) => bean.ColorGroup);
-  }
   get paginatedBeans() {
     const start = this.page * this.rowsPerPage;
     const end = start + this.rowsPerPage;
@@ -132,10 +128,12 @@ export class JellyBeansStore {
           conbinationBeans.push(bean);
         }
       });
-
       const allOrange =
         conbinationBeans.length > 0 &&
-        conbinationBeans.every((bean: Bean) => bean.BackgroundColor && isOrangeShade(bean.BackgroundColor));
+        conbinationBeans.every(
+          (bean: Bean) =>
+            bean.BackgroundColor && isOrangeShade(bean.BackgroundColor)
+        );
       if (allOrange) {
         allBeansCombinations.push({
           beans: conbinationBeans,
@@ -157,13 +155,6 @@ export class JellyBeansStore {
     try {
       const data: BeansRes = await fetchCombinations();
       this.combinations = data.data;
-    } catch (e: any) {}
-  }
-
-  public async checkHealth() {
-    try {
-      const data = await checkHealth();
-      this.healthStatus = data;
     } catch (e: any) {}
   }
 }

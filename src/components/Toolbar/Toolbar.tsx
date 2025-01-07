@@ -9,7 +9,9 @@ import Filter from "./Filter";
 
 const Toolbar = () => {
   const handleToggleView = () => {
-    const newViewType = jellyBeansStore.isTable ? ViewType.GRID : ViewType.TABLE;
+    const newViewType = jellyBeansStore.isTable
+      ? ViewType.GRID
+      : ViewType.TABLE;
     jellyBeansStore.setViewType(newViewType);
   };
 
@@ -32,7 +34,11 @@ const Toolbar = () => {
         <Sort />
       </Box>
       <IconButton onClick={handleToggleView}>
-        {jellyBeansStore.isTable ? <GridOnIcon /> : <TableChartIcon />}
+        {jellyBeansStore.isTable ? (
+          <GridOnIcon style={{ color: "white" }} />
+        ) : (
+          <TableChartIcon style={{ color: "white" }} />
+        )}
       </IconButton>
     </div>
   );

@@ -56,18 +56,3 @@ export const fetchCombinations = async (): Promise<BeansRes> => {
     throw new Error(`Failed to fetch combinations: ${error.message}`);
   }
 };
-
-export const checkHealth = async (): Promise<any> => {
-  try {
-    const response = await fetch(`${BASE_URL}/${Endpoints.HEALTH}`);
-    if (!response.ok) {
-      const errorData: ApiError = await response.json();
-      throw new Error(
-        `Health check failed: ${errorData.message || response.statusText}`
-      );
-    }
-    return await response.json();
-  } catch (error: any) {
-    throw new Error(`Failed to check health: ${error.message}`);
-  }
-};

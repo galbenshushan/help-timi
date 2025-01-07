@@ -9,3 +9,10 @@ export enum BeanAttribute {
   SEASONAL = "Seasonal",
   KOSHER = "Kosher",
 }
+
+export enum SortType {
+  ASC = "asc",
+  DESC = "desc",
+  GROUP = "group",
+  COLOR = "color",
+}

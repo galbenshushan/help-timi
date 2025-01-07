@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
-import { jellyBeansStore } from "../store";
-import { Bean } from "../types/JellyBeans";
 import CombinationCard from "../components/Combinations/CombinationCard";
 import BeanItem from "../components/Combinations/BeanItem";
-import { isOrangeShade } from "../utils/Colors";
+import useBeanCombinations from "../hooks/useBeanCombinations";
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -27,21 +25,13 @@ const BeanList = styled.div`
 `;
 
 const TimiPage: React.FC = observer(() => {
-  const orangeJellyBeansCombinations = jellyBeansStore.getOrangeCombinations();
-  const JellyBeans = jellyBeansStore.beans;
-  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
-  const [highlightedBeans, setHighlightedBeans] = useState<Set<number>>(
-    new Set()
-  );
-
-  const handleRecommendation = (index: number) => {
-    setHighlightedIndex(index);
-    const recommendedBeans = new Set<number>();
-    orangeJellyBeansCombinations[index].beans.forEach((bean: Bean) =>
-      recommendedBeans.add(bean.BeanId)
-    );
-    setHighlightedBeans(recommendedBeans);
-  };
+  const {
+    orangeJellyBeansCombinations,
+    filteredBeans,
+    highlightedIndex,
+    highlightedBeans,
+    handleRecommendation,
+  } = useBeanCombinations();
 
   return (
     <PageContainer>
@@ -59,7 +49,7 @@ const TimiPage: React.FC = observer(() => {
         ))}
       </CombinationsContainer>
       <BeanList>
-        {JellyBeans.filter((bean) => bean.BackgroundColor && isOrangeShade(bean.BackgroundColor)).map((bean) => (
+        {filteredBeans.map((bean) => (
           <BeanItem
             key={bean.BeanId}
             bean={bean}

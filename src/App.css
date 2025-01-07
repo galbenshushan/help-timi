@@ -3,25 +3,25 @@
 }
 
 body {
-  background-color: #ed872d;
+  background-color: #f58f40;
 }
 
-
-/* text, */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
- p, 
- a, 
- /* li,  */
- /* ul,  */
- /* ol,  */
- /* span,  */
- /* div,  */
-button,
-input,td,th {
+input {
   color: white !important;
+}
+td,
+th {
+  font-size: 18px !important;
+  color: white !important;
+}
+
+th{
+  font-size: 24px !important;
+  font-weight: 800 !important;
 }

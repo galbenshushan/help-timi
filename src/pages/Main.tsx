@@ -6,6 +6,39 @@ import BeansGrid from "../components/JellyBeansGrid/BeansGrid";
 import { Pagination } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import Toolbar from "../components/Toolbar/Toolbar";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
+
+const PaginationWrapper = styled(Pagination)`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  & .MuiPaginationItem-root {
+    color: white;
+  }
+  & .MuiPaginationItem-root.Mui-selected {
+    background-color: #d4731c !important;
+    color: white !important;
+  }
+  &:hover {
+    & .MuiPaginationItem-root.Mui-selected {
+      background-color: #d4731c !important;
+      color: white !important;
+    }
+  }
+`;
 
 const Main: React.FC = observer(() => {
   const handleChangePage = (
@@ -16,33 +49,20 @@ const Main: React.FC = observer(() => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <Container>
       <h1>
         Jelly Beans {jellyBeansStore.isTable ? ViewType.TABLE : ViewType.GRID}
       </h1>
       <Toolbar />
-      <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+      <ContentWrapper>
         {jellyBeansStore.isTable ? <BeansList /> : <BeansGrid />}
-      </div>
-      <Pagination
+      </ContentWrapper>
+      <PaginationWrapper
         count={jellyBeansStore.totalPages}
         page={jellyBeansStore.page + 1}
         onChange={handleChangePage}
-        color="primary"
-        sx={{
-          marginTop: "20px",
-          display: "flex",
-          justifyContent: "center",
-          "& .MuiPaginationItem-root": {
-            color: "#d4731c",
-          },
-          "& .MuiPaginationItem-root.Mui-selected": {
-            backgroundColor: "#d4731c",
-            color: "white",
-          },
-        }}
       />
-    </div>
+    </Container>
   );
 });
 

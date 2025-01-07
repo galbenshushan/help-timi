@@ -20,7 +20,7 @@ const StyledBox = styled(Box)({
   paddingTop: "10px",
   width: "100%",
   height: "150px",
-  backgroundColor: "#ed872d",
+  backgroundColor: "#f58f40",
   position: "relative",
   display: "flex",
   alignItems: "flex-start",
@@ -46,16 +46,16 @@ const StyledTypography = styled(Typography)({
 const StyledButton = styled(Button)<
   ButtonProps & { active: boolean } & LinkProps
 >(({ active }) => ({
-  color: active ? "#FFFFFF" : "#ed872d",
+  color: active ? "#FFFFFF" : "#f58f40",
   fontWeight: "bold",
   textTransform: "none",
   marginRight: "16px",
   fontSize: "21px",
   padding: "12px 50px",
   borderRadius: "25px",
-  backgroundColor: active ? "#f59845" : "#d4731c",
+  backgroundColor: active ? "#f46d24" : "#dc4912",
   "&:hover": {
-    backgroundColor: "#f59845",
+    backgroundColor: "#f46d24",
   },
 }));
 

@@ -6,7 +6,7 @@ interface YAxeProps {
 }
 const YAxisLabels = styled.div`
   position: absolute;
-  left: -40px;
+  left: -25px;
   top: 0;
   height: 100%;
   display: flex;

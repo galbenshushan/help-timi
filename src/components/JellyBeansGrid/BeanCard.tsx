@@ -7,7 +7,7 @@ import { IconMapping } from "../../consts/general";
 import ColorContainer from "../ColorContainer";
 
 const BeanCardContainer = styled(Box)`
-  border: 1px solid #ddd;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   width: 300px;
   height: 350px;
@@ -16,6 +16,8 @@ const BeanCardContainer = styled(Box)`
   display: inline-block;
   text-align: start;
   position: relative;
+  background: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(10px); 
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
   &:hover {
@@ -57,6 +59,7 @@ const AttributesWrapper = styled(Box)`
 const Description = styled(Typography)`
   margin-bottom: 12px;
   text-align: start;
+  color: #fff; 
 `;
 
 const BeanCard = ({ bean }: { bean: Bean }) => {
@@ -65,7 +68,7 @@ const BeanCard = ({ bean }: { bean: Bean }) => {
       <ImageWrapper>
         <BeanImage src={bean.ImageUrl} alt={bean.FlavorName} />
       </ImageWrapper>
-      <Typography variant="h6" fontWeight={"bold"}>
+      <Typography variant="h6" fontWeight={"bold"} color="white">
         {bean.FlavorName}
       </Typography>
       <div>
