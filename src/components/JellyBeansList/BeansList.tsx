@@ -18,17 +18,24 @@ const StyledTableCell = styled(TableCell)`
   text-align: start;
 `;
 
+const StyledTableHeader = styled(TableRow)`
+  border: none !important;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+`;
+
 const BeansList: React.FC = observer(() => {
   return (
     <Table sx={{ width: "100%" }}>
       <TableHead>
-        <TableRow>
+        <StyledTableHeader>
           <TableCell></TableCell>
           <StyledTableCell>Flavor Name</StyledTableCell>
           <StyledTableCell>Description</StyledTableCell>
           <StyledTableCell>Group Name</StyledTableCell>
           <StyledTableCell>Color</StyledTableCell>
-        </TableRow>
+        </StyledTableHeader>
       </TableHead>
       <TableBody>
         {jellyBeansStore.paginatedBeans.map((bean: Bean) => (
