@@ -36,7 +36,11 @@ const TimiPage: React.FC = observer(() => {
   return (
     <PageContainer>
       <h1>Help Timi Find His Favorite Jelly Bean Combinations!</h1>
-      <h4>Choose by clicking on one of the combinations</h4>
+      <h4>
+        Timi loves jelly beans, but he can only eat the orange ones! Help him
+        pick the best combination by clicking on one of the orange jelly bean
+        combinations below.
+      </h4>
 
       <CombinationsContainer>
         {orangeJellyBeansCombinations.map((group: any, index: number) => (
